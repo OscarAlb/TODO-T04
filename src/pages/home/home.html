@@ -1,41 +1,42 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      ToDo
-    </ion-title>
-    <ion-buttons end>
+    <ion-navbar>
+      <ion-title>
+        ToDo
+      </ion-title>
+      <ion-buttons end>
         <button (click)="toggleRecorder()" ion-button *ngIf="!reorderIsEnabled">
-                   Ordenar
-                  </button>
-            
-                  <button (click)="toggleRecorder()" ion-button *ngIf="reorderIsEnabled">
-                    Listo
-                  </button>
-            
-      <button ion-button (click)="openToDoAlert()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding>
-    <ion-list [reorder]="reorderIsEnabled" (ionItemReorder)="itemReordered($event)">
-    <ion-item-sliding *ngFor="let todo of todos">
-      <ion-item>{{todo}}</ion-item>
-      <ion-item-options side="right">
-          <button ion-button color="secondary">
-            <ion-icon name="checkbox"></ion-icon>
+          Ordenar
         </button>
-      </ion-item-options>
-
-    </ion-item-sliding>
-
-
-  </ion-list>
-  <ion-fab right bottom>
-          <button ion-fab [navPush]="archivosPage">
-            <ion-icon name="list"></ion-icon>
+  
+        <button (click)="toggleRecorder()" ion-button *ngIf="reorderIsEnabled">
+          Listo
+        </button>
+  
+        <button ion-button (click)="openToDoAlert()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <ion-list [reorder]="reorderIsEnabled" (ionItemReorder)="itemReordered($event)">
+      <ion-item-sliding *ngFor= "let todo of todos; let todoIndex = index">
+        <ion-item>{{todo}}</ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="secondary" (click)="archiveTodo(todoIndex)">
+            <ion-icon name="checkbox"></ion-icon >
           </button>
-  </ion-fab> 
-</ion-content>
+        </ion-item-options>
+      </ion-item-sliding>
+  
+  
+    </ion-list>
+  
+    <ion-fab right bottom>
+      <button ion-fab [navPush]="archivosPage">
+        <ion-icon name="list"></ion-icon >
+      </button>
+    </ion-fab> 
+  
+  </ion-content>

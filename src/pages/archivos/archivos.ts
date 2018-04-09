@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TodoService } from './../../providers/todo-service/todo-service';
 
 /**
-+ * Generated class for the ArchivosPage page.
-+ *
-+ * See https://ionicframework.com/docs/components/#navigation for more info on
-+ * Ionic pages and navigation.
-+ */
+ * Generated class for the ArchivosPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
 
 @IonicPage()
 @Component({
@@ -15,11 +16,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ArchivosPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public archivedTodos=[];
+
+  constructor(
+    private todoService: TodoService,
+    public navCtrl: NavController, 
+    public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ArchivosPage');
+    this.archivedTodos = this.todoService.getArchiveTodos(); 
   }
 
 }

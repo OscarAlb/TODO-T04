@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, reorderArray } from 'ionic-angular';
 import { ArchivosPage } from '../archivos/archivos';
 
+
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -13,23 +15,28 @@ export class HomePage {
   public archivosPage = ArchivosPage;
 
   constructor(
-        private todoService: TodoService,
-        public navCtrl: NavController,
-        private alertController: AlertController) {
+    private todoService: TodoService,
+    public navCtrl: NavController,
+    private alertController: AlertController) {
+    this.todos=this.todoService.getTodos();
+    }
 
-          this.todos=this.todoService.getTodos();
-              }
-          
-            goToArchivePage() {
-              this.navCtrl.push(ArchivosPage)
-            }
-          
-            toggleRecorder() {
-              this.reorderIsEnabled = !this.reorderIsEnabled;
+
+  archiveTodo(todoIndex){
+    this.todoService.archiveTodo(todoIndex);
+  }
+
+
+  goToArchivePage() {
+    this.navCtrl.push(ArchivosPage)
+  }
+
+  toggleRecorder() {
+    this.reorderIsEnabled = !this.reorderIsEnabled;
   }
 
   itemReordered($event) {
-        reorderArray(this.todos, $event);
+    reorderArray(this.todos, $event);
   }
 
   openToDoAlert() {
@@ -45,10 +52,10 @@ export class HomePage {
       },
       {
         text: "Añadir",
-                handler: (inputData) => {
+        handler: (inputData) => {
           let todoText;
           todoText = inputData.addTodoInput;
-+         this.todoService.addTodo(todoText);
+          this.todoService.addTodo(todoText);
         }
       }]
     });
