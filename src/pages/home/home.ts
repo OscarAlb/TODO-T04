@@ -1,36 +1,54 @@
+import { TodoService } from './../../providers/todo-service/todo-service';
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, reorderArray } from 'ionic-angular';
+import { ArchivosPage } from '../archivos/archivos';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  public todos = [];
+  public reorderIsEnabled = false;
+  public archivosPage = ArchivosPage;
 
-  public todos=[];
+  constructor(
+        private todoService: TodoService,
+        public navCtrl: NavController,
+        private alertController: AlertController) {
 
-  constructor(public navCtrl: NavController, 
-    private alertController: AlertController) {
+          this.todos=this.todoService.getTodos();
+              }
+          
+            goToArchivePage() {
+              this.navCtrl.push(ArchivosPage)
+            }
+          
+            toggleRecorder() {
+              this.reorderIsEnabled = !this.reorderIsEnabled;
+  }
 
+  itemReordered($event) {
+        reorderArray(this.todos, $event);
   }
 
   openToDoAlert() {
     let addToDoAlert = this.alertController.create({
-      title: "Add A ToDo",
-      message: "Enter your todo",
+      title: "Añadir nuevo registro",
+      message: "Inserta tu Tarea",
       inputs: [{
         type: "text",
         name: "addTodoInput"
       }],
       buttons: [{
-        text: "Cancel"
+        text: "Cancelar"
       },
       {
-        text: "Add ToDo",
-        handler:(inputData)=>{
+        text: "Añadir",
+                handler: (inputData) => {
           let todoText;
-          todoText=inputData.addTodoInput;
-          this.todos.push(todoText);
+          todoText = inputData.addTodoInput;
++         this.todoService.addTodo(todoText);
         }
       }]
     });

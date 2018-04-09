@@ -1,9 +1,17 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      TODO
+      ToDo
     </ion-title>
     <ion-buttons end>
+        <button (click)="toggleRecorder()" ion-button *ngIf="!reorderIsEnabled">
+                   Ordenar
+                  </button>
+            
+                  <button (click)="toggleRecorder()" ion-button *ngIf="reorderIsEnabled">
+                    Listo
+                  </button>
+            
       <button ion-button (click)="openToDoAlert()">
         <ion-icon name="add"></ion-icon>
       </button>
@@ -12,12 +20,12 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+    <ion-list [reorder]="reorderIsEnabled" (ionItemReorder)="itemReordered($event)">
     <ion-item-sliding *ngFor="let todo of todos">
       <ion-item>{{todo}}</ion-item>
       <ion-item-options side="right">
-        <button color="danger" ion-button>
-          <ion-icon name="trash"></ion-icon>
+          <button ion-button color="secondary">
+            <ion-icon name="checkbox"></ion-icon>
         </button>
       </ion-item-options>
 
@@ -25,4 +33,9 @@
 
 
   </ion-list>
+  <ion-fab right bottom>
+          <button ion-fab [navPush]="archivosPage">
+            <ion-icon name="list"></ion-icon>
+          </button>
+  </ion-fab> 
 </ion-content>
